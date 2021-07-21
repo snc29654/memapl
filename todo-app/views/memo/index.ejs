@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h3><%= title %> <a href="/memo/add">追加</a></h3>
+    <div>
+      <table>
+      <% for(var i in content) { %>
+        <tr>
+          <% var obj = content[i]; %>
+          <td><%= obj.text %></td>
+          <td><a href="/memo/edit?id=<%= obj.id %>">更新</a></td>
+          <td><a href="/memo/delete?id=<%= obj.id %>">削除</a></td>
+        </tr>
+      <% } %>
+      </table>
+    </div>
+  </body>
+</html>

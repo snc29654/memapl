@@ -25,11 +25,20 @@ router.get('/', function(req, res, next) {
 
 router.get('/add', function(req, res, next) {
     const data = {
-        title: '追加',
+        title: '追加add',
         content: '新しいデータを入力してください'
     }
     res.render('memo/add', data);
 });
+
+router.get('/all', function(req, res, next) {
+    const data = {
+        title: '種別選択',
+        content: '選択する種別を入力してください'
+    }
+    res.render('memo/all', data);
+});
+
 
 router.post('/add', function(req, res, next) {
     const tx = req.body.text;
@@ -38,6 +47,24 @@ router.post('/add', function(req, res, next) {
     db.run('insert into memos (text,kind) values (?,?)', memos=[tx,kd])
     //res.redirect() 引数に指定したアドレスにリダイレクト
     res.redirect('/memo');
+});
+
+router.post('/all', function(req, res, next) {
+    const kd = req.body.kind;
+    db.serialize(() => {
+        //SQL文, memosテーブルから全てのレコードを取得する（* は全て）
+        db.all("select * from memos where kind =?",memos=[kd], (err, rows) => {
+            if (!err) {
+                const data = {
+                    title: 'To Do メモ 種別表示',
+                    content: rows //DataBaseから返された全レコードがrowsに配列で入ります
+                }
+                //viewファイルのmemo/indexにdataオブジェクトが渡されます
+                //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+                res.render('memo/index', data);
+            }
+        })
+    })
 });
 
 router.get('/edit', function(req, res, next) {

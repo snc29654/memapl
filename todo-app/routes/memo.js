@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/add', function(req, res, next) {
     const data = {
-        title: '追加add',
+        title: '追加 or 表示',
         content: '新しいデータを入力してください'
     }
     res.render('memo/add', data);

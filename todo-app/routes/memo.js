@@ -38,6 +38,13 @@ router.get('/all', function(req, res, next) {
     }
     res.render('memo/all', data);
 });
+router.get('/top', function(req, res, next) {
+    const data = {
+        title: 'メイン',
+        content: '入り口の画面です'
+    }
+    res.render('memo/top', data);
+});
 
 
 router.post('/add', function(req, res, next) {
@@ -47,6 +54,14 @@ router.post('/add', function(req, res, next) {
     db.run('insert into memos (text,kind) values (?,?)', memos=[tx,kd])
     //res.redirect() 引数に指定したアドレスにリダイレクト
     res.redirect('/memo');
+});
+router.post('/top', function(req, res, next) {
+    const tx = req.body.text;
+    const kd = req.body.kind;
+    //SQL文, DataBaseのレコード作成
+    db.run('insert into memos (text,kind) values (?,?)', memos=[tx,kd])
+    //res.redirect() 引数に指定したアドレスにリダイレクト
+    res.redirect('memo/top');
 });
 
 router.post('/all', function(req, res, next) {

@@ -38,6 +38,14 @@ router.get('/all', function(req, res, next) {
     }
     res.render('memo/all', data);
 });
+router.get('/word', function(req, res, next) {
+    const data = {
+        title: 'ワード検索',
+        content: '検索するワードを入力してください'
+    }
+    res.render('memo/word', data);
+});
+
 router.get('/top', function(req, res, next) {
     const data = {
         title: 'メイン',
@@ -72,6 +80,24 @@ router.post('/all', function(req, res, next) {
             if (!err) {
                 const data = {
                     title: 'To Do メモ 種別表示',
+                    content: rows //DataBaseから返された全レコードがrowsに配列で入ります
+                }
+                //viewファイルのmemo/indexにdataオブジェクトが渡されます
+                //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+                res.render('memo/index', data);
+            }
+        })
+    })
+});
+router.post('/word', function(req, res, next) {
+    const kd = req.body.kind;
+    const tx = req.body.text;
+    db.serialize(() => {
+        //SQL文, memosテーブルから全てのレコードを取得する（* は全て）
+        db.all("select * from memos where text like ?",memos=["%"+kd+"%"], (err, rows) => {
+            if (!err) {
+                const data = {
+                    title: 'ワード選択',
                     content: rows //DataBaseから返された全レコードがrowsに配列で入ります
                 }
                 //viewファイルのmemo/indexにdataオブジェクトが渡されます

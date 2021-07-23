@@ -23,9 +23,27 @@ router.get('/', function(req, res, next) {
     })
 });
 
+router.post('/', function(req, res, next) {
+    db.serialize(() => {
+        //SQL文, memosテーブルから全てのレコードを取得する（* は全て）
+        db.all("select * from memos", (err, rows) => {
+            if (!err) {
+                const data = {
+                    title: 'To Do メモ 一覧表示',
+                    content: "" //DataBaseから返された全レコードがrowsに配列で入ります
+                }
+                //viewファイルのmemo/indexにdataオブジェクトが渡されます
+                //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+                res.render('memo/index', data);
+            }
+        })
+    })
+});
+
+
 router.get('/add', function(req, res, next) {
     const data = {
-        title: '追加 or 表示',
+        title: '追加',
         content: '新しいデータを入力してください'
     }
     res.render('memo/add', data);

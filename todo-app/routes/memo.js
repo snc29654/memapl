@@ -63,6 +63,13 @@ router.get('/word', function(req, res, next) {
     }
     res.render('memo/word', data);
 });
+router.get('/delall', function(req, res, next) {
+    const data = {
+        title: '全削除',
+        content: 'すべてのレコードを削除します'
+    }
+    res.render('memo/delall', data);
+});
 
 router.get('/top', function(req, res, next) {
     const data = {
@@ -125,6 +132,25 @@ router.post('/word', function(req, res, next) {
         })
     })
 });
+router.post('/delall', function(req, res, next) {
+    const kd = req.body.kind;
+    const tx = req.body.text;
+    db.serialize(() => {
+        //SQL文, memosテーブルから全てのレコードを取得する（* は全て）
+        db.all("delete from memos", (err, rows) => {
+            if (!err) {
+                const data = {
+                    title: '全削除',
+                    content: rows //DataBaseから返された全レコードがrowsに配列で入ります
+                }
+                //viewファイルのmemo/indexにdataオブジェクトが渡されます
+                //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+                res.render('memo/index', data);
+            }
+        })
+    })
+});
+
 
 router.get('/edit', function(req, res, next) {
     const id = req.query.id;

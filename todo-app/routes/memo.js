@@ -135,6 +135,15 @@ router.post('/word', function(req, res, next) {
 router.post('/delall', function(req, res, next) {
     const kd = req.body.kind;
     const tx = req.body.text;
+    const fs = require('fs');
+    fs.copyFile('memo_data.sqlite3', 'memo_data.sqlite3.bak', (err) => {
+        if (err) {
+            console.log(err.stack);
+        }
+        else {
+            console.log('Done.');
+        }
+    });
     db.serialize(() => {
         //SQL文, memosテーブルから全てのレコードを取得する（* は全て）
         db.all("delete from memos", (err, rows) => {

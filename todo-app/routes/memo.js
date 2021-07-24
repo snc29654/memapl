@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
         db.all("select * from memos", (err, rows) => {
             if (!err) {
                 const data = {
-                    title: 'To Do メモ 一覧表示',
+                    title: '',
                     content: rows //DataBaseから返された全レコードがrowsに配列で入ります
                 }
                 //viewファイルのmemo/indexにdataオブジェクトが渡されます
@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
         db.all("select * from memos", (err, rows) => {
             if (!err) {
                 const data = {
-                    title: 'To Do メモ 一覧表示',
+                    title: '',
                     content: "" //DataBaseから返された全レコードがrowsに配列で入ります
                 }
                 //viewファイルのmemo/indexにdataオブジェクトが渡されます

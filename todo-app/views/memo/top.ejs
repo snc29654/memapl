@@ -8,10 +8,19 @@
     <p><%= content %></p>
     <div>
       <form action="/memo" method="get">
-        <input type="submit" value="表示へ">
+        <input type="submit" value="全レコード表示">
       </form>
-      <form action="/memo" method="post">
-        <input type="submit" value="メニューへ">
+      <form action="/memo/add" method="get">
+        <input type="submit" value="レコード追加　">
+      </form>
+      <form action="/memo/all" method="get">
+        <input type="submit" value="種別検索　　　">
+      </form>
+      <form action="/memo/word" method="get">
+        <input type="submit" value="ワード検索　　">
+      </form>
+      <form action="/memo/delall" method="get">
+        <input type="submit" value="全レコート削除">
       </form>
     </div>
   </body>

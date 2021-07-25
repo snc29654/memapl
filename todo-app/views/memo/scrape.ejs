@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h3> <a href="/memo/top">メイン</a></h3>
+    <p><%= content %></p>
+    <div>
+      <form action="/memo/scrape" method="post">
+        <p>種別<input type="text" name="kind" value="スクレイピング"></p>
+        <p>スクレイピング内容</p>  
+        <p></p><textarea name="text" ROWS=10 COLS=50>スクレイピングURLを入れてください</textarea></p>
+        <input type="submit" value="追加ボタン">
+      </form>
+    </div>
+  </body>
+  </html>

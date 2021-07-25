@@ -29,6 +29,13 @@ router.get('/add', function(req, res, next) {
     }
     res.render('memo/add', data);
 });
+router.get('/scrape', function(req, res, next) {
+    const data = {
+        title: 'スクレイピング',
+        content: 'スクレイピングデータを入力してください'
+    }
+    res.render('memo/scrape', data);
+});
 
 router.get('/selkind', function(req, res, next) {
     const data = {
@@ -69,6 +76,44 @@ router.post('/add', function(req, res, next) {
     //res.redirect() 引数に指定したアドレスにリダイレクト
     res.redirect('/memo');
 });
+router.post('/scrape', function(req, res, next) {
+    const tx = req.body.text;
+    const kd = req.body.kind;
+
+    const rp = require('request-promise');
+    const ch = require('cheerio');
+    
+    const option = {
+        transform: (body) => {
+            return ch.load(body);
+        }
+    };
+    https://news.yahoo.co.jp/topics
+    rp.get(tx, option)
+        .then(($) => {
+            let element = $('a').text();
+            //追加
+            if (element == "") {
+                return "none";
+            }
+            return element;
+        }).then((element) => {
+            console.log(element);
+            //SQL文, DataBaseのレコード作成
+            db.run('insert into memos (text,kind) values (?,?)', memos=[element,kd])
+            //res.redirect() 引数に指定したアドレスにリダイレクト
+            res.redirect('/memo');
+
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+
+    //SQL文, DataBaseのレコード作成
+//    db.run('insert into memos (text,kind) values (?,?)', memos=[element,kd])
+    //res.redirect() 引数に指定したアドレスにリダイレクト
+//    res.redirect('/memo');
+});
+
 router.post('/top', function(req, res, next) {
     const tx = req.body.text;
     const kd = req.body.kind;

@@ -30,12 +30,12 @@ router.get('/add', function(req, res, next) {
     res.render('memo/add', data);
 });
 
-router.get('/all', function(req, res, next) {
+router.get('/selkind', function(req, res, next) {
     const data = {
         title: '種別選択',
         content: '選択する種別を入力してください'
     }
-    res.render('memo/all', data);
+    res.render('memo/selkind', data);
 });
 router.get('/word', function(req, res, next) {
     const data = {
@@ -78,7 +78,7 @@ router.post('/top', function(req, res, next) {
     res.redirect('memo/top');
 });
 
-router.post('/all', function(req, res, next) {
+router.post('/selkind', function(req, res, next) {
     const kd = req.body.kind;
     db.serialize(() => {
         //SQL文, memosテーブルから全てのレコードを取得する（* は全て）

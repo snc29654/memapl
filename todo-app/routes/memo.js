@@ -4,7 +4,7 @@ var router = express.Router();
 var sqlite3 = require('sqlite3');
 
 //データベースオブジェクトの取得
-const db = new sqlite3.Database('memo_data.sqlite3');
+const db = new sqlite3.Database('../../memo_data.sqlite3');
 
 router.get('/', function(req, res, next) {
     db.serialize(() => {
@@ -173,7 +173,7 @@ router.post('/delall', function(req, res, next) {
     const kd = req.body.kind;
     const tx = req.body.text;
     const fs = require('fs');
-    fs.copyFile('memo_data.sqlite3', 'memo_data.sqlite3.bak', (err) => {
+    fs.copyFile('../../memo_data.sqlite3', '../../memo_data.sqlite3.bak', (err) => {
         if (err) {
             console.log(err.stack);
         }

@@ -69,7 +69,12 @@ router.get('/top', function(req, res, next) {
 
 
 router.post('/add', function(req, res, next) {
-    const tx = req.body.text;
+    require('date-utils');
+
+    var dt = new Date();
+    var formatted = dt.toFormat("YYYY/MM/DD HH24時MI分SS秒");
+    console.log(formatted);
+    const tx = formatted+ "-------" + req.body.text;
     const kd = req.body.kind;
     //SQL文, DataBaseのレコード作成
     db.run('insert into memos (text,kind) values (?,?)', memos=[tx,kd])
@@ -77,6 +82,12 @@ router.post('/add', function(req, res, next) {
     res.redirect('/memo');
 });
 router.post('/scrape', function(req, res, next) {
+    require('date-utils');
+
+    var dt = new Date();
+    var formatted = dt.toFormat("YYYY/MM/DD HH24時MI分SS秒");
+    console.log(formatted);
+
     const tx = req.body.text;
     const kd = req.body.kind;
 
@@ -88,7 +99,6 @@ router.post('/scrape', function(req, res, next) {
             return ch.load(body);
         }
     };
-    https://news.yahoo.co.jp/topics
     rp.get(tx, option)
         .then(($) => {
             let element = $('a').text();
@@ -100,6 +110,7 @@ router.post('/scrape', function(req, res, next) {
         }).then((element) => {
             console.log(element);
             //SQL文, DataBaseのレコード作成
+            element = formatted+ "-------" + element;
             db.run('insert into memos (text,kind) values (?,?)', memos=[element,kd])
             //res.redirect() 引数に指定したアドレスにリダイレクト
             res.redirect('/memo');

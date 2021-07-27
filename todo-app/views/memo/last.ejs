@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h3> <a href="/memo/top">メインへ戻る</a></h3>
+    <p><%= content %></p>
+    <div>
+      <form action="/memo/last" method="post">
+        <input type="submit" value="最後のレコード表示">
+      </form>
+    </div>
+  </body>
+  </html>

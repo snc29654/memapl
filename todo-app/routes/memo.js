@@ -51,6 +51,13 @@ router.get('/word', function(req, res, next) {
     }
     res.render('memo/word', data);
 });
+router.get('/last', function(req, res, next) {
+    const data = {
+        title: '最後のレコード',
+        content: '検索するワードを入力してください'
+    }
+    res.render('memo/last', data);
+});
 router.get('/delall', function(req, res, next) {
     const data = {
         title: '全削除',
@@ -79,7 +86,7 @@ router.post('/add', function(req, res, next) {
     //SQL文, DataBaseのレコード作成
     db.run('insert into memos (text,kind) values (?,?)', memos=[tx,kd])
     //res.redirect() 引数に指定したアドレスにリダイレクト
-    res.redirect('/memo');
+    res.redirect('/memo/last');
 });
 router.post('/scrape', function(req, res, next) {
     require('date-utils');
@@ -169,6 +176,25 @@ router.post('/word', function(req, res, next) {
         })
     })
 });
+router.post('/last', function(req, res, next) {
+    const kd = req.body.kind;
+    const tx = req.body.text;
+    db.serialize(() => {
+        //SQL文, memosテーブルから全てのレコードを取得する（* は全て）
+        db.all("select * from memos where id in ( select max( id ) from memos )", (err, rows) => {
+            if (!err) {
+                const data = {
+                    title: '最後のレコード',
+                    content: rows //DataBaseから返された全レコードがrowsに配列で入ります
+                }
+                //viewファイルのmemo/indexにdataオブジェクトが渡されます
+                //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+                res.render('memo/index', data);
+            }
+        })
+    })
+});
+
 router.post('/delall', function(req, res, next) {
     const kd = req.body.kind;
     const tx = req.body.text;

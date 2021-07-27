@@ -54,7 +54,7 @@ router.get('/word', function(req, res, next) {
 router.get('/last', function(req, res, next) {
     const data = {
         title: '最後のレコード',
-        content: '検索するワードを入力してください'
+        content: '以下のボタンを押してください'
     }
     res.render('memo/last', data);
 });

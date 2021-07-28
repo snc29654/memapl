@@ -85,8 +85,22 @@ router.post('/add', function(req, res, next) {
     const kd = req.body.kind;
     //SQL文, DataBaseのレコード作成
     db.run('insert into memos (text,kind) values (?,?)', memos=[tx,kd])
+
+    db.all("select * from memos where id in ( select max( id ) from memos )", (err, rows) => {
+        if (!err) {
+            const data = {
+                title: '最後のレコード',
+                content: rows //DataBaseから返された全レコードがrowsに配列で入ります
+            }
+            //viewファイルのmemo/indexにdataオブジェクトが渡されます
+            //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+            res.render('memo/index', data);
+        }
+    })
+
+
     //res.redirect() 引数に指定したアドレスにリダイレクト
-    res.redirect('/memo/last');
+//    res.redirect('/memo/last');
 });
 router.post('/scrape', function(req, res, next) {
     require('date-utils');

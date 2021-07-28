@@ -5,6 +5,8 @@ var sqlite3 = require('sqlite3');
 
 //データベースオブジェクトの取得
 const db = new sqlite3.Database('../../memo_data.sqlite3');
+const dbej = new sqlite3.Database('../../ejdict.sqlite3');
+
 
 router.get('/', function(req, res, next) {
     db.serialize(() => {
@@ -44,6 +46,14 @@ router.get('/selkind', function(req, res, next) {
     }
     res.render('memo/selkind', data);
 });
+router.get('/ejdict', function(req, res, next) {
+    const data = {
+        title: '英和辞書',
+        content: '調べたい英単語を入力してください'
+    }
+    res.render('memo/ejdict', data);
+});
+
 router.get('/word', function(req, res, next) {
     const data = {
         title: 'ワード検索',
@@ -172,6 +182,25 @@ router.post('/selkind', function(req, res, next) {
         })
     })
 });
+
+router.post('/ejdict', function(req, res, next) {
+    const kd = req.body.kind;
+    dbej.serialize(() => {
+        //SQL文, memosテーブルから全てのレコードを取得する（* は全て）
+        dbej.all("select * from items where word =?",memos=[kd], (err, rows) => {
+            if (!err) {
+                const data = {
+                    title: '英和辞書',
+                    content: rows //DataBaseから返された全レコードがrowsに配列で入ります
+                }
+                //viewファイルのmemo/indexにdataオブジェクトが渡されます
+                //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+                res.render('memo/index_ej', data);
+            }
+        })
+    })
+});
+
 router.post('/word', function(req, res, next) {
     const kd = req.body.kind;
     const tx = req.body.text;

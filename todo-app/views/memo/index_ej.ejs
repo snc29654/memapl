@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h3><%= title %> <a href="/memo/top">メインへ戻る</a></h3>
+    <div>
+        <table border =\"3\">
+          <% for(var i in content) { %>
+            <tr>
+              <% var obj = content[i]; %>
+              <tbody><tr><td>  
+            <td><font color="#0000ff"><%= obj.word %></font></td>
+            <td><%= obj.mean %></td>
+        </tbody></tr></td>
+        </tr>
+      <% } %>
+      </table>
+    </div>
+  </body>
+</html>

@@ -187,7 +187,7 @@ router.post('/ejdict', function(req, res, next) {
     const kd = req.body.kind;
     dbej.serialize(() => {
         //SQL文, memosテーブルから全てのレコードを取得する（* は全て）
-        dbej.all("select * from items where word =?",memos=[kd], (err, rows) => {
+        dbej.all("select * from items where word like ?",memos=[kd+"%"], (err, rows) => {
             if (!err) {
                 const data = {
                     title: '英和辞書',

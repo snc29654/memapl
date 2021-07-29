@@ -61,6 +61,13 @@ router.get('/word', function(req, res, next) {
     }
     res.render('memo/word', data);
 });
+router.get('/worddict', function(req, res, next) {
+    const data = {
+        title: 'ワード検索',
+        content: '検索するワードを入力してください'
+    }
+    res.render('memo/worddict', data);
+});
 router.get('/last', function(req, res, next) {
     const data = {
         title: '最後のレコード',
@@ -219,6 +226,27 @@ router.post('/word', function(req, res, next) {
         })
     })
 });
+
+router.post('/worddict', function(req, res, next) {
+    const kd = req.body.kind;
+    const tx = req.body.text;
+    dbej.serialize(() => {
+        //SQL文, memosテーブルから全てのレコードを取得する（* は全て）
+        dbej.all("select * from items where mean like ?",memos=["%"+kd+"%"], (err, rows) => {
+            if (!err) {
+                const data = {
+                    title: '和英検索',
+                    content: rows //DataBaseから返された全レコードがrowsに配列で入ります
+                }
+                //viewファイルのmemo/indexにdataオブジェクトが渡されます
+                //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+                res.render('memo/index_ej', data);
+            }
+        })
+    })
+});
+
+
 router.post('/last', function(req, res, next) {
     const kd = req.body.kind;
     const tx = req.body.text;

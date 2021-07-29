@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h3> <a href="/memo/top">メインへ戻る</a></h3>
+    <p><%= content %></p>
+    <div>
+      <form action="/memo/worddict" method="post">
+        <p>和英検索ワード<input type="text" name="kind"></p>
+        <input type="submit" value="選択表示">
+      </form>
+    </div>
+  </body>
+  </html>

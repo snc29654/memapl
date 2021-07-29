@@ -221,6 +221,14 @@ router.post('/word', function(req, res, next) {
                 }
                 //viewファイルのmemo/indexにdataオブジェクトが渡されます
                 //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+                data.content.forEach( function( value ) {
+ 
+
+                    console.log( value.text );
+                    var str =value.text
+                    var result = str.replace( kd, '●'+ kd);
+                    value.text = result    
+                });
                 res.render('memo/index', data);
             }
         })
@@ -240,6 +248,14 @@ router.post('/worddict', function(req, res, next) {
                 }
                 //viewファイルのmemo/indexにdataオブジェクトが渡されます
                 //res.render(テンプレートファイル名, { 渡す値をオブジェクトで }) → テンプレートファイルを描画する
+                data.content.forEach( function( value ) {
+ 
+
+                    console.log( value.mean );
+                    var str =value.mean
+                    var result = str.replace( kd, '●'+ kd);
+                    value.mean = result    
+                });
                 res.render('memo/index_ej', data);
             }
         })

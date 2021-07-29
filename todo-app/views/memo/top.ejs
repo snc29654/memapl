@@ -8,28 +8,28 @@
     <p><%= content %></p>
     <div>
       <form action="/memo">
-        <input type="submit" value="全レコード表示">
+        <input type="submit" value="全レコード表示">===>[メモレコードをすべて表示]
       </form>
       <form action="/memo/add" >
-        <input type="submit" value="レコード追加　">
+        <input type="submit" value="レコード追加　">===>[メモDBにメモを追加する]
       </form>
       <form action="/memo/selkind" >
-        <input type="submit" value="種別検索　　　">
+        <input type="submit" value="種別検索　　　">===>[メモの種別を選別する]
       </form>
       <form action="/memo/word" >
-        <input type="submit" value="ワード検索　　">
+        <input type="submit" value="ワード検索　　">===>[メモの中で指定ワードを検索する]
       </form>
       <form action="/memo/scrape" >
-        <input type="submit" value="スクレイピング">
+        <input type="submit" value="スクレイピング">===>[スクレイピング内容のURLでスクレイピングする]
       </form>
       <form action="/memo/last" method="post">
-        <input type="submit" value="最後のレコード">
+        <input type="submit" value="最後のレコード">===>[メモDBの中の最後のレコードを表示する]
       </form>
       <form action="/memo/delall" >
-        <input type="submit" value="全レコード削除">
+        <input type="submit" value="全レコード削除">===>[メモDB全てを削除する]
       </form>
       <form action="/memo/ejdict" >
-        <input type="submit" value="英和辞書　　　">
+        <input type="submit" value="英和辞書　　　">===>[上記メモとは独立した英和辞書機能]
       </form>
     </div>
   </body>

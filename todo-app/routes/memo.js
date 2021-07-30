@@ -224,11 +224,40 @@ router.post('/word', function(req, res, next) {
                 data.content.forEach( function( value ) {
  
 
-                    console.log( value.text );
+                    //console.log( value.text );
                     var str =value.text
                     var result = str.replace( kd, '●'+ kd);
                     value.text = result    
                 });
+
+                const stringifySync = require("csv-stringify/lib/sync");
+
+                const records = data.content;
+                
+                const csvString = stringifySync(records, {
+                  header: true,
+                  columns: {
+                    id: "ID",
+                    kind: "種別",
+                    text: "内容"
+                  },
+                  quoted_string: true
+                });
+                
+                console.log(csvString);
+
+                const fs = require("fs");
+
+                // 書き込むデータ準備
+
+
+                const csvdata = csvString;
+                // 書き込み
+                fs.writeFile("../../csv_out.csv", csvdata ,(err) => {
+                  if (err) throw err;
+                  console.log('正常に書き込みが完了しました');
+                });
+
                 res.render('memo/index', data);
             }
         })
@@ -251,11 +280,56 @@ router.post('/worddict', function(req, res, next) {
                 data.content.forEach( function( value ) {
  
 
-                    console.log( value.mean );
+                    //console.log( value.mean );
                     var str =value.mean
                     var result = str.replace( kd, '●'+ kd);
                     value.mean = result    
                 });
+
+                const stringifySync = require("csv-stringify/lib/sync");
+
+                const records = data.content;
+                
+                const csvString = stringifySync(records, {
+                  header: true,
+                  columns: {
+                    id: "ID",
+                    word: "英単語",
+                    mean: "意味"
+                  },
+                  quoted_string: true
+                });
+                
+                console.log(csvString);
+                const stringifySync_ej = require("csv-stringify/lib/sync");
+
+                const records_ej = data.content;
+                
+                const csvString_ej = stringifySync_ej(records_ej, {
+                  header: true,
+                  columns: {
+                    id: "ID",
+                    word: "英単語",
+                    mean: "意味"
+                  },
+                  quoted_string: true
+                });
+                
+                console.log(csvString_ej);
+
+                const fs = require("fs");
+
+                // 書き込むデータ準備
+
+
+                const csvdata = csvString_ej;
+                // 書き込み
+                fs.writeFile("../../csv_out_ej.csv", csvdata ,(err) => {
+                  if (err) throw err;
+                  console.log('正常に書き込みが完了しました');
+                });
+
+
                 res.render('memo/index_ej', data);
             }
         })

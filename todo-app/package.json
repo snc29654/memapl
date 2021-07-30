@@ -8,6 +8,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
     "cookie-parser": "~1.4.4",
+    "csv": "^5.5.0",
     "date-utils": "^1.2.21",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",

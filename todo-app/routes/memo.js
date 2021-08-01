@@ -100,8 +100,9 @@ router.post('/add', function(req, res, next) {
     console.log(formatted);
     const tx = formatted+ "-------" + req.body.text;
     const kd = req.body.kind;
+    const jpgpath = "../"+req.body.jpgpath;
     //SQL文, DataBaseのレコード作成
-    db.run('insert into memos (text,kind) values (?,?)', memos=[tx,kd])
+    db.run('insert into memos (text,kind,jpgpath) values (?,?,?)', memos=[tx,kd,jpgpath])
 
     db.all("select * from memos where id in ( select max( id ) from memos )", (err, rows) => {
         if (!err) {

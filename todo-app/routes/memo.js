@@ -100,7 +100,7 @@ router.post('/add', function(req, res, next) {
     console.log(formatted);
     const tx = formatted+ "-------" + req.body.text;
     const kd = req.body.kind;
-    const jpgpath = "../"+req.body.jpgpath;
+    const jpgpath = req.body.jpgpath;
     //SQL文, DataBaseのレコード作成
     db.run('insert into memos (text,kind,jpgpath) values (?,?,?)', memos=[tx,kd,jpgpath])
 
@@ -408,10 +408,14 @@ router.post('/edit', function(req, res, next) {
     const id = req.body.id;
     const tx = req.body.text;
     const kd = req.body.kind;
+    const jp = req.body.jpgpath;
+
     const q = "update memos set text = ? where id = ?";
     db.run(q, tx, id);
     const q2 = "update memos set kind = ? where id = ?";
     db.run(q2, kd, id);
+    const q3 = "update memos set jpgpath = ? where id = ?";
+    db.run(q3, jp, id);
     res.redirect('/memo');
 });
 

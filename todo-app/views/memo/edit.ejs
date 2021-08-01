@@ -9,6 +9,7 @@
     <div>
       <form action="/memo/edit" method="post">
         <p>種別<input type="text" name="kind" value="<%= memoData.kind %>"></p>
+        <p>jpgpath<input type="text" name="jpgpath" value="<%= memoData.jpgpath %>"></p>
         <p>メモ内容：</p>
         <p></p><textarea name="text" ROWS=10 COLS=50  ><%= memoData.text %></textarea></p>
         <input type="hidden" name="id" value="<%= memoData.id %>">

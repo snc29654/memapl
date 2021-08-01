@@ -101,6 +101,7 @@ router.post('/add', function(req, res, next) {
     const tx = formatted+ "-------" + req.body.text;
     const kd = req.body.kind;
     const jpgpath = req.body.jpgpath;
+
     //SQL文, DataBaseのレコード作成
     db.run('insert into memos (text,kind,jpgpath) values (?,?,?)', memos=[tx,kd,jpgpath])
 

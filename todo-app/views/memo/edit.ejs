@@ -9,7 +9,17 @@
     <div>
       <form action="/memo/edit" method="post">
         <p>種別<input type="text" name="kind" value="<%= memoData.kind %>"></p>
-        <p>ランク<input type="text" name="jpgpath" value="<%= memoData.jpgpath %>"></p>
+        <p>ランク<select name="jpgpath" id="jpgpath" value="<%= memoData.jpgpath %>">
+          <option value="1">ランク１</option>
+          <option value="2">ランク２</option>
+          <option value="3">ランク３</option>
+          </select></p>
+        <script>
+
+          document.getElementById("jpgpath").value = "<%= memoData.jpgpath %>"
+
+
+        </script>  
         <p>メモ内容：</p>
         <p></p><textarea name="text" ROWS=10 COLS=50  ><%= memoData.text %></textarea></p>
         <input type="hidden" name="id" value="<%= memoData.id %>">
